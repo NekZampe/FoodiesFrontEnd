@@ -6,61 +6,59 @@ const UserContext = createContext();
 export const useUserContext = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
- const [user, setUser] = useState(() => {
-    // Initialize user state with data from localStorage, if available
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
+  const [token, setToken] = useState(() => {
+    // Retrieve the token as a string without parsing it
+    return localStorage.getItem('token') || null;
   });
 
   useEffect(() => {
-    if (user) {
-      console.log("User data updated:", user);
+    if (token) {
+      if (token.length > 10000) { // Example check for token size
+        console.warn('Token is too large. Consider reducing its size.');
+      } else {
+        localStorage.setItem('token', token); // Store token directly
+      }
+    } else {
+      localStorage.removeItem('token');
     }
-  }, [user]);
+  }, [token]);
 
   const login = async (jwt) => {
-    console.log("LOGIN FUNCTION");
     try {
-      // Send a GET request to your backend endpoint to validate the JWT token
-      const response = await axios.post(`http://localhost:5059/api/VerifyToken/${jwt}`);
-      const { decoded } = response.data; 
-      
-      console.log('User Data', decoded);
-      
-      // Set the decoded user data in the state
-      setUser(decoded);
+      const response = await axios.post(
+        `https://localhost:5001/api/Auth/${jwt}`,
+        {},
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        }
+      );
 
-      localStorage.setItem('user', JSON.stringify(decoded));
-      
+      const { claims } = response.data; 
+
+      console.log('User Data:', claims);
+      setToken(jwt); 
+      console.log("Stored Token:", jwt);
     } catch (error) {
-      console.log('Error token', jwt);
-      clearJWT();
-      // Handle invalid or expired tokens here
-      console.error('Invalid token:', error);
+      console.error("Error during login:", error);
     }
   };
 
+  const clearJWT = () => {
+    localStorage.removeItem('token');
+  };
 
-  // Remove the JWT from storage and clear user data from the state
   const logout = () => {
     clearJWT();
-    setUser(null);
+    setToken(null);
     alert("Logging out. Thank you.");
   };
 
-
-  // Retrieve the stored JWT token from local storage
-  const getStoredJWT = () => {
-    return localStorage.getItem('user');
-  };
-
-  // Clear the JWT token from local storage
-  const clearJWT = () => {
-    localStorage.removeItem('user');
-  };
-
   return (
-    <UserContext.Provider value={{user, login, logout}}>
+    <UserContext.Provider value={{ token, login, logout }}>
       {children}
     </UserContext.Provider>
   );

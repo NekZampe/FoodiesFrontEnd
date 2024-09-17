@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
+import Footer from '../components/Footer';
 
 const LoginPage = () => {
   const [showLogin, setShowLogin] = useState(true);
@@ -10,11 +11,15 @@ const LoginPage = () => {
     setShowLogin(!showLogin);
   };
 
+  const handleRegistrationSuccess = () => {
+    setShowLogin(true);
+  };
+
   return (
     <div className="bg-[url('https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover bg-center min-h-screen">
       <Header />
       <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
-        {showLogin ? <LoginForm /> : <RegisterForm />}
+        {showLogin ? <LoginForm /> : <RegisterForm onSuccess={handleRegistrationSuccess} />}
         <button
           onClick={toggleForm}
           className="mt-4 py-2 px-4 bg-red-400 text-black rounded-md hover:bg-red-600 transition duration-300"
@@ -22,6 +27,7 @@ const LoginPage = () => {
           {showLogin ? 'Create Account' : 'Sign In'}
         </button>
       </div>
+      <Footer></Footer>
     </div>
   );
 };

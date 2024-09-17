@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const RegisterForm = () => {
+const RegisterForm = ({ onSuccess }) => { 
   const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -10,24 +13,33 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
 
     try {
-      const response = await axios.post('https://localhost:5001/api/User/register', {
+      
+      await axios.post('https://localhost:5001/api/User/register/', {
         email,
+        userName,
+        name,
         password,
+        confirmPassword
       }, {
         headers: {
           'Content-Type': 'application/json',
         },
+        withCredentials: true 
       });
-      
-      setMessage('Registration successful!');
+
+     
+      alert('Registration successful! Please log in.');
       setError('');
+      
+      
+      setTimeout(() => onSuccess(), 1000); 
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred');
       setMessage('');
@@ -45,6 +57,28 @@ const RegisterForm = () => {
             id="email" 
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="userName" className="block text-sm font-medium mb-2">Username</label>
+          <input 
+            type="text" 
+            id="userName" 
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-sm font-medium mb-2">Name</label>
+          <input 
+            type="text" 
+            id="name" 
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
