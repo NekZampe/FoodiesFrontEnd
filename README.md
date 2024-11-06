@@ -16,3 +16,5 @@ Welcome to the Foodies App! This application is designed for food enthusiasts wh
 - **Backend**: ASP.Net
 - **Database**: PostgreSQL
 - **APIs**: Google Places API for restaurant data
+
+![Project Screenshot](Project_Images\1_Login.png)
