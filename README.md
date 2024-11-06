@@ -17,10 +17,10 @@ Welcome to the Foodies App! This application is designed for food enthusiasts wh
 - **Database**: PostgreSQL
 - **APIs**: Google Places API for restaurant data
 
-![Project Screenshot](Project_Images\1_Login.png)
-![Project Screenshot](Project_Images\2_Feed.png)
-![Project Screenshot](Project_Images\3_FindRestaurants.png)
-![Project Screenshot](Project_Images\4_SearchRestaurant.png)
-![Project Screenshot](Project_Images\5_RestaurantPage.png)
-![Project Screenshot](Project_Images\6_MyPage.png)
-![Project Screenshot](Project_Images\7_RestaurantMap.png)
+![Project Screenshot](https://github.com/NekZampe/FoodiesFrontEnd/blob/main/Project_Images/1_Login.png)
+![Project Screenshot](https://github.com/NekZampe/FoodiesFrontEnd/blob/main/Project_Images/2_Feed.png)
+![Project Screenshot](https://github.com/NekZampe/FoodiesFrontEnd/blob/main/Project_Images/3_FindRestaurants.png)
+![Project Screenshot](https://github.com/NekZampe/FoodiesFrontEnd/blob/main/Project_Images/4_SearchRestaurant.png)
+![Project Screenshot](https://github.com/NekZampe/FoodiesFrontEnd/blob/main/Project_Images/5_RestaurantPage.png)
+![Project Screenshot](https://github.com/NekZampe/FoodiesFrontEnd/blob/main/Project_Images/6_MyPage.png)
+![Project Screenshot](https://github.com/NekZampe/FoodiesFrontEnd/blob/main/Project_Images/7_RestaurantMap.png)
